@@ -4,6 +4,8 @@ URL kind for ddu.vim
 
 This kind implements URL operations.
 
+Please read [help](doc/ddu-kind-url.txt) for details.
+
 ## Requirements
 
 - [denops.vim](https://github.com/vim-denops/denops.vim)

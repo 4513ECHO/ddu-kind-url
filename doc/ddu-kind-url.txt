@@ -3,7 +3,7 @@
 Author: Hibiki <4513echo@gmail.com>
 License: MIT License
 URL: https://github.com/4513ECHO/ddu-kind-url
-Last change: 2022 Mar 26
+Last change: 2022 Apr 05
 
 ==============================================================================
 CONTENTS					*ddu-kind-url-contents*
@@ -51,11 +51,11 @@ PARAMS						*ddu-kind-url-params*
 ACTIONS						*ddu-kind-url-actions*
 
 browse
-	Browse the URLs using external browser. If |openbrowser| is installed,
-	use it.
+	Browse the URLs using external browser. |openbrowser| is needed to use
+	this action.
 
 open
-	Open the URLs.
+	Open the URLs as vim buffer.
 
 	params:
 		command		(default: "edit")
