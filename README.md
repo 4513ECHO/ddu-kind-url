@@ -9,7 +9,7 @@ Please read [help](doc/ddu-kind-url.txt) for details.
 ## Requirements
 
 - [denops.vim](https://github.com/vim-denops/denops.vim)
-- [ddu.vim](https://github.com/Shoguo/ddu.vim)
+- [ddu.vim](https://github.com/Shougo/ddu.vim)
 - [open-browser.vim](https://github.com/tyru/open-browser.vim) (Optional)
 
 ## Configuration
