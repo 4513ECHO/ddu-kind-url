@@ -3,7 +3,7 @@
 Author: Hibiki <4513echo@gmail.com>
 License: MIT License
 URL: https://github.com/4513ECHO/ddu-kind-url
-Last change: 2022 Apr 05
+Last change: 2022 May 03
 
 ==============================================================================
 CONTENTS					*ddu-kind-url-contents*
@@ -57,9 +57,10 @@ browse
 open
 	Open the URLs as vim buffer.
 
-	params:
-		command		(default: "edit")
-			open command.
+	params~
+	command		string (default: "|:edit|")
+		The vim ex command which open buffer. You can omit the head
+		colon of command.
 
 yank
 	Yank the URLs.

@@ -26,7 +26,7 @@ export class Kind extends BaseKind<Params> {
     },
     async open(args) {
       const params = args.actionParams as OpenParams;
-      const openCommand = params.command ?? "edit";
+      const openCommand = params.command ?? ":edit";
       for (const item of args.items) {
         const action = item?.action as ActionData;
         await args.denops.cmd("silent execute command fnameescape(path)", {
