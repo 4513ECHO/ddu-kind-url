@@ -12,15 +12,26 @@ type Params = Record<never, never>;
 interface OpenParams {
   command?: string;
 }
+interface YankParams {
+  register?: string;
+}
 
 export class Kind extends BaseKind<Params> {
   actions: Actions<Params> = {
     async browse(args) {
-      if (await fn.exists(args.denops, "g:loaded_openbrowser")) {
+      if (
+        await fn.exists(args.denops, "g:loaded_openbrowser") ||
+        await fn.exists(args.denops, "*openbrowser#open")
+      ) {
         for (const item of args.items) {
           const action = item?.action as ActionData;
           await args.denops.call("openbrowser#open", action.url);
         }
+      } else {
+        args.denops.call(
+          "ddu#util#print_error",
+          "open-browser.vim is not installed",
+        );
       }
       return Promise.resolve(ActionFlags.None);
     },
