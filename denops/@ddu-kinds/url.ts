@@ -48,9 +48,14 @@ export class Kind extends BaseKind<Params> {
       return Promise.resolve(ActionFlags.None);
     },
     async yank(args) {
+      const params = args.actionParams as YankParams;
+      const register = params.register;
       for (const item of args.items) {
         const action = item?.action as ActionData;
         await fn.setreg(args.denops, '"', action.url);
+        if (register) {
+          await fn.setreg(args.denops, register, action.url);
+        }
         if (await fn.has(args.denops, "clipboard")) {
           await fn.setreg(
             args.denops,

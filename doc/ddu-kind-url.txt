@@ -3,7 +3,7 @@
 Author: Hibiki <4513echo@gmail.com>
 License: MIT License
 URL: https://github.com/4513ECHO/ddu-kind-url
-Last change: 2022 May 03
+Last change: 2022 May 13
 
 ==============================================================================
 CONTENTS					*ddu-kind-url-contents*
@@ -64,6 +64,12 @@ open
 
 yank
 	Yank the URLs.
+
+	params~
+	register	string (default: `undefined`)
+		The |registers| which URLs will be yanked to. If you omit it,
+		URLs will be yanked to unnamed register (`""`). Please see
+		also |setreg()|.
 
 ==============================================================================
 ABOUT						*ddu-kind-url-about*
