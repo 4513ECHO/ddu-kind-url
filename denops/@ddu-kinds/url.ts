@@ -1,9 +1,9 @@
-import * as fn from "https://deno.land/x/denops_std@v3.3.0/function/mod.ts";
-import type { Actions } from "https://deno.land/x/ddu_vim@v1.4.0/types.ts";
+import * as fn from "https://deno.land/x/denops_std@v3.3.2/function/mod.ts";
+import type { Actions } from "https://deno.land/x/ddu_vim@v1.8.7/types.ts";
 import {
   ActionFlags,
   BaseKind,
-} from "https://deno.land/x/ddu_vim@v1.4.0/types.ts";
+} from "https://deno.land/x/ddu_vim@v1.8.7/types.ts";
 
 export interface ActionData {
   url: string;
