@@ -24,3 +24,11 @@ call ddu#custom#patch_global({
       \ },
       \ })
 ```
+
+## Use from deno
+
+You can import types from [pax.deno.dev](https://pax.deno.dev):
+
+```typescript
+import type { ActionData } from "https://pax.deno.dev/4513ECHO/ddu-kind-url@$VERSION/denops/@ddu-kinds/url.ts"
+```
