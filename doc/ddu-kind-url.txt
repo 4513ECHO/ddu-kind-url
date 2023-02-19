@@ -35,11 +35,9 @@ EXAMPLES					*ddu-kind-url-examples*
 
 >
 	" Set kind default action.
-	call ddu#custom#patch_global({
-	    \ 'kindOptions': {
-	    \   'url': {
-	    \     'defaultAction': 'browse',
-	    \   },
+	call ddu#custom#patch_global('kindOptions', {
+	    \ 'url': {
+	    \   'defaultAction': 'browse',
 	    \ },
 	    \ })
 <
@@ -50,10 +48,12 @@ PARAMS						*ddu-kind-url-params*
 ==============================================================================
 ACTIONS						*ddu-kind-url-actions*
 
+						*ddu-kind-url-action-browse*
 browse
 	Browse the URLs using external browser. |openbrowser| is needed to use
 	this action.
 
+						*ddu-kind-url-action-open*
 open
 	Open the URLs as vim buffer.
 
@@ -62,6 +62,7 @@ open
 		The vim ex command which open buffer. You can omit the head
 		colon of command.
 
+						*ddu-kind-url-action-yank*
 yank
 	Yank the URLs.
 

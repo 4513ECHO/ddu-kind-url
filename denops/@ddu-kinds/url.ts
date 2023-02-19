@@ -17,7 +17,7 @@ interface YankParams {
 }
 
 export class Kind extends BaseKind<Params> {
-  actions: Actions<Params> = {
+  override actions: Actions<Params> = {
     async browse(args) {
       if (
         await fn.exists(args.denops, "g:loaded_openbrowser") ||
@@ -35,6 +35,7 @@ export class Kind extends BaseKind<Params> {
       }
       return Promise.resolve(ActionFlags.None);
     },
+
     async open(args) {
       const params = args.actionParams as OpenParams;
       const openCommand = params.command ?? ":edit";
@@ -47,6 +48,7 @@ export class Kind extends BaseKind<Params> {
       }
       return Promise.resolve(ActionFlags.None);
     },
+
     async yank(args) {
       const params = args.actionParams as YankParams;
       const register = params.register;
@@ -68,7 +70,7 @@ export class Kind extends BaseKind<Params> {
     },
   };
 
-  params(): Params {
+  override params(): Params {
     return {};
   }
 }

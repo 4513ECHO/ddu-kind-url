@@ -16,11 +16,9 @@ Please read [help](doc/ddu-kind-url.txt) for details.
 
 ```vim
 " Set kind default action.
-call ddu#custom#patch_global({
-      \ 'kindOptions': {
-      \   'url': {
-      \     'defaultAction': 'browse',
-      \   },
+call ddu#custom#patch_global('kindOptions', {
+      \ 'url': {
+      \   'defaultAction': 'browse',
       \ },
       \ })
 ```
