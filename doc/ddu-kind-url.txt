@@ -3,7 +3,7 @@
 Author: Hibiki <4513echo@gmail.com>
 License: MIT License
 URL: https://github.com/4513ECHO/ddu-kind-url
-Last change: 2022 May 13
+Last change: 2023 Mar 10
 
 ==============================================================================
 CONTENTS					*ddu-kind-url-contents*
@@ -45,20 +45,30 @@ EXAMPLES					*ddu-kind-url-examples*
 ==============================================================================
 PARAMS						*ddu-kind-url-params*
 
+						*ddu-kind-url-param-externalOpener*
+externalOpener	|String| (default: "openbrowser")
+	Method to use external browser in |ddu-kind-url-action-browse|.
+	Following values are available:
+
+	value		description~
+	"openbrowser"	Use |openbrowser|
+
 ==============================================================================
 ACTIONS						*ddu-kind-url-actions*
 
 						*ddu-kind-url-action-browse*
 browse
-	Browse the URLs using external browser. |openbrowser| is needed to use
-	this action.
+	Browse the URLs using external browser.
+	|ddu-kind-url-param-externalOpener| is used for a way to open external
+	browser.
+
 
 						*ddu-kind-url-action-open*
 open
 	Open the URLs as vim buffer.
 
 	params~
-	command		string (default: "|:edit|")
+	command		|String| (default: "|:edit|")
 		The vim ex command which open buffer. You can omit the head
 		colon of command.
 
@@ -67,7 +77,7 @@ yank
 	Yank the URLs.
 
 	params~
-	register	string (default: `undefined`)
+	register	|String| (default: `undefined`)
 		The |registers| which URLs will be yanked to. If you omit it,
 		URLs will be yanked to unnamed register (`""`). Please see
 		also |setreg()|.

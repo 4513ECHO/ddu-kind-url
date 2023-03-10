@@ -8,7 +8,9 @@ import {
 export interface ActionData {
   url: string;
 }
-type Params = Record<never, never>;
+type Params = {
+  externalOpener: "openbrowser";
+};
 interface OpenParams {
   command?: string;
 }
@@ -19,19 +21,19 @@ interface YankParams {
 export class Kind extends BaseKind<Params> {
   override actions: Actions<Params> = {
     async browse(args) {
-      if (
-        await fn.exists(args.denops, "g:loaded_openbrowser") ||
-        await fn.exists(args.denops, "*openbrowser#open")
-      ) {
-        for (const item of args.items) {
-          const action = item?.action as ActionData;
-          await args.denops.call("openbrowser#open", action.url);
-        }
-      } else {
-        args.denops.call(
-          "ddu#util#print_error",
-          "open-browser.vim is not installed",
-        );
+      switch (args.kindParams.externalOpener) {
+        case "openbrowser":
+          for (const item of args.items) {
+            const action = item?.action as ActionData;
+            await args.denops.call("openbrowser#open", action.url);
+          }
+          break;
+        default:
+          await args.denops.call(
+            "ddu#util#print_error",
+            "open-browser.vim is not installed",
+            "ddu-kind-url",
+          );
       }
       return Promise.resolve(ActionFlags.None);
     },
@@ -71,6 +73,8 @@ export class Kind extends BaseKind<Params> {
   };
 
   override params(): Params {
-    return {};
+    return {
+      externalOpener: "openbrowser",
+    };
   }
 }
