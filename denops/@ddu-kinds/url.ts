@@ -11,12 +11,6 @@ export interface ActionData {
 type Params = {
   externalOpener: "openbrowser";
 };
-interface OpenParams {
-  command?: string;
-}
-interface YankParams {
-  register?: string;
-}
 
 export class Kind extends BaseKind<Params> {
   override actions: Actions<Params> = {
@@ -39,12 +33,11 @@ export class Kind extends BaseKind<Params> {
     },
 
     async open(args) {
-      const params = args.actionParams as OpenParams;
-      const openCommand = params.command ?? ":edit";
+      const params = args.actionParams as { command?: string };
       for (const item of args.items) {
         const action = item?.action as ActionData;
         await args.denops.cmd("silent execute command fnameescape(path)", {
-          command: openCommand,
+          command: params.command ?? ":edit",
           path: action.url,
         });
       }
@@ -52,22 +45,13 @@ export class Kind extends BaseKind<Params> {
     },
 
     async yank(args) {
-      const params = args.actionParams as YankParams;
-      const register = params.register;
-      for (const item of args.items) {
-        const action = item?.action as ActionData;
-        await fn.setreg(args.denops, '"', action.url);
-        if (register) {
-          await fn.setreg(args.denops, register, action.url);
-        }
-        if (await fn.has(args.denops, "clipboard")) {
-          await fn.setreg(
-            args.denops,
-            await args.denops.eval("v:register"),
-            action.url,
-          );
-        }
-      }
+      const { register } = args.actionParams as { register?: string };
+      const action = args.items.at(-1)?.action as ActionData;
+      await fn.setreg(
+        args.denops,
+        register ?? await args.denops.eval("v:register"),
+        action.url,
+      );
       return Promise.resolve(ActionFlags.None);
     },
   };

@@ -75,12 +75,13 @@ open
 						*ddu-kind-url-action-yank*
 yank
 	Yank the URLs.
+	If you select multiple items, last item is used.
 
 	params~
 	register	|String| (default: `undefined`)
-		The |registers| which URLs will be yanked to. If you omit it,
-		URLs will be yanked to unnamed register (`""`). Please see
-		also |setreg()|.
+		The |registers| which URLs will be yanked to.
+		If you omit it, URLs will be yanked to |v:register|.
+		Please see also |setreg()|.
 
 ==============================================================================
 ABOUT						*ddu-kind-url-about*
