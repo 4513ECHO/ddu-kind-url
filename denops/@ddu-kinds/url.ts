@@ -25,11 +25,11 @@ export class Kind extends BaseKind<Params> {
         default:
           await args.denops.call(
             "ddu#util#print_error",
-            "open-browser.vim is not installed",
+            `Invalid externalOpener: ${args.kindParams.externalOpener}`,
             "ddu-kind-url",
           );
       }
-      return Promise.resolve(ActionFlags.None);
+      return ActionFlags.None;
     },
 
     async open(args) {
@@ -41,18 +41,20 @@ export class Kind extends BaseKind<Params> {
           path: action.url,
         });
       }
-      return Promise.resolve(ActionFlags.None);
+      return ActionFlags.None;
     },
 
     async yank(args) {
       const { register } = args.actionParams as { register?: string };
-      const action = args.items.at(-1)?.action as ActionData;
+      const content = args.items
+        .map((item) => (item?.action as ActionData).url)
+        .join("\n");
       await fn.setreg(
         args.denops,
         register ?? await args.denops.eval("v:register"),
-        action.url,
+        content,
       );
-      return Promise.resolve(ActionFlags.None);
+      return ActionFlags.Persist;
     },
   };
 

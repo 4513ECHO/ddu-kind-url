@@ -75,7 +75,9 @@ open
 						*ddu-kind-url-action-yank*
 yank
 	Yank the URLs.
-	If you select multiple items, last item is used.
+	If you select multiple items, All of URLs are yanked as joined with
+	newline.
+	This action doesn't quit the ddu ui.
 
 	params~
 	register	|String| (default: `undefined`)
