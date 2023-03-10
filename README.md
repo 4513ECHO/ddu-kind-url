@@ -10,7 +10,11 @@ Please read [help](doc/ddu-kind-url.txt) for details.
 
 - [denops.vim](https://github.com/vim-denops/denops.vim)
 - [ddu.vim](https://github.com/Shougo/ddu.vim)
-- [open-browser.vim](https://github.com/tyru/open-browser.vim) (Optional)
+
+Optional dependencies:
+
+- [tyru/open-browser.vim](https://github.com/tyru/open-browser.vim)
+- [itchyny/vim-external](https://github.com/itchyny/vim-external)
 
 ## Configuration
 

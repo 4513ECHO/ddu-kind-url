@@ -9,7 +9,7 @@ export interface ActionData {
   url: string;
 }
 type Params = {
-  externalOpener: "openbrowser";
+  externalOpener: "openbrowser" | "external";
 };
 
 export class Kind extends BaseKind<Params> {
@@ -20,6 +20,12 @@ export class Kind extends BaseKind<Params> {
           for (const item of args.items) {
             const action = item?.action as ActionData;
             await args.denops.call("openbrowser#open", action.url);
+          }
+          break;
+        case "external":
+          for (const item of args.items) {
+            const action = item?.action as ActionData;
+            await args.denops.call("external#browser", action.url);
           }
           break;
         default:
