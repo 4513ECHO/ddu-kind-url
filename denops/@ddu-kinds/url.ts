@@ -9,7 +9,7 @@ import {
 } from "https://deno.land/x/ddu_vim@v2.3.0/types.ts";
 
 export interface ActionData {
-  url: string;
+  url?: string;
 }
 type Params = {
   externalOpener: "openbrowser" | "external";
@@ -56,9 +56,7 @@ export class Kind extends BaseKind<Params> {
 
     async yank(args) {
       const { register } = args.actionParams as { register?: string };
-      const content = args.items
-        .map((item) => getUrl(item))
-        .join("\n");
+      const content = args.items.map(getUrl).join("\n");
       await fn.setreg(
         args.denops,
         register ?? await args.denops.eval("v:register"),
