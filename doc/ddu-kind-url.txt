@@ -3,7 +3,7 @@
 Author: Hibiki <4513echo@gmail.com>
 License: MIT License
 URL: https://github.com/4513ECHO/ddu-kind-url
-Last change: 2023 Mar 10
+Last change: 2023 Mar 12
 
 ==============================================================================
 CONTENTS					*ddu-kind-url-contents*
@@ -28,10 +28,12 @@ Please install both "|ddu|.vim" and "|denops.vim|".
 https://github.com/Shougo/ddu.vim
 https://github.com/vim-denops/denops.vim
 
-"|openbrowser|.vim" or "|vim-external|" are optional dependencies.
+"|openbrowser|.vim", "|vim-external|" or "|vim-protocol|" are optional
+dependencies.
 
 https://github.com/tyru/open-browser.vim
 https://github.com/itchyny/vim-external
+https://github.com/lambdalisue/vim-protocol
 
 ==============================================================================
 EXAMPLES					*ddu-kind-url-examples*
@@ -66,15 +68,16 @@ browse
 	|ddu-kind-url-param-externalOpener| is used for a way to open external
 	browser.
 
-
 						*ddu-kind-url-action-open*
 open
 	Open the URLs as vim buffer.
+	This will be useful when you use plugins that can treat the URLs as vim
+	buffer, like |netrw| and |vim-protocol|.
 
 	params~
 	command		|String| (default: "|:edit|")
-		The vim ex command which open buffer. You can omit the head
-		colon of command.
+		The vim ex command which open buffer.
+		You can omit the head colon of command.
 
 						*ddu-kind-url-action-yank*
 yank

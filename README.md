@@ -15,6 +15,7 @@ Optional dependencies:
 
 - [tyru/open-browser.vim](https://github.com/tyru/open-browser.vim)
 - [itchyny/vim-external](https://github.com/itchyny/vim-external)
+- [lambdalisue/vim-protocol](https://github.com/lambdalisue/vim-protocol)
 
 ## Configuration
 
