@@ -1,13 +1,13 @@
-import * as fn from "https://deno.land/x/denops_std@v4.0.0/function/mod.ts";
+import * as fn from "https://deno.land/x/denops_std@v4.3.3/function/mod.ts";
 import type {
   Actions,
   Item,
-} from "https://deno.land/x/ddu_vim@v2.3.0/types.ts";
+} from "https://deno.land/x/ddu_vim@v2.8.4/types.ts";
 import {
   ActionFlags,
   BaseKind,
-} from "https://deno.land/x/ddu_vim@v2.3.0/types.ts";
-import { TextLineStream } from "https://deno.land/std@0.178.0/streams/text_line_stream.ts";
+} from "https://deno.land/x/ddu_vim@v2.8.4/types.ts";
+import { TextLineStream } from "https://deno.land/std@0.187.0/streams/text_line_stream.ts";
 
 export interface ActionData {
   url?: string;
