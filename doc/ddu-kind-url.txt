@@ -1,12 +1,12 @@
-*ddu-kind-url.txt*				URL kind for ddu.vim
+*ddu-kind-url.txt*                                        URL kind for ddu.vim
 
 Author: Hibiki <mail@4513echo.dev>
 License: MIT License
 URL: https://github.com/4513ECHO/ddu-kind-url
-Last change: 2023 May 16
+Last change: 2023 Aug 21
 
 ==============================================================================
-CONTENTS					*ddu-kind-url-contents*
+CONTENTS                                               *ddu-kind-url-contents*
 
 Introduction					|ddu-kind-url-introduction|
 Install						|ddu-kind-url-install|
@@ -16,27 +16,26 @@ Actions						|ddu-kind-url-actions|
 About						|ddu-kind-url-about|
 
 ==============================================================================
-INTRODUCTION					*ddu-kind-url-introduction*
+INTRODUCTION                                       *ddu-kind-url-introduction*
 
-This kind implements URL operations.
+*ddu-kind-url* is |ddu-kinds| implementing URL operations.
 
 ==============================================================================
-INSTALL						*ddu-kind-url-install*
+INSTALL                                                 *ddu-kind-url-install*
 
 Please install both "|ddu|.vim" and "|denops.vim|".
 
 https://github.com/Shougo/ddu.vim
 https://github.com/vim-denops/denops.vim
 
-"|openbrowser|.vim", "|vim-external|" or "|vim-protocol|" are optional
-dependencies.
+Following plugins are optional dependencies:
 
-https://github.com/tyru/open-browser.vim
-https://github.com/itchyny/vim-external
-https://github.com/lambdalisue/vim-protocol
+- |openbrowser|.vim (https://github.com/tyru/open-browser.vim)
+- |vim-external| (https://github.com/itchyny/vim-external)
+- |vim-protocol| (https://github.com/lambdalisue/vim-protocol)
 
 ==============================================================================
-EXAMPLES					*ddu-kind-url-examples*
+EXAMPLES                                               *ddu-kind-url-examples*
 
 >
 	" Set kind default action.
@@ -48,42 +47,42 @@ EXAMPLES					*ddu-kind-url-examples*
 <
 
 ==============================================================================
-PARAMS						*ddu-kind-url-params*
+PARAMS                                                   *ddu-kind-url-params*
 
-						*ddu-kind-url-param-externalOpener*
-externalOpener	|String| (default: "openbrowser")
-	Method to use external browser in |ddu-kind-url-action-browse|.
+                                           *ddu-kind-url-param-externalOpener*
+externalOpener	|String| (default: "systemopen")
+	The method to use external browser in |ddu-kind-url-action-browse|.
 	Following values are available:
 
 	value		description~
 	"openbrowser"	Use |openbrowser|
 	"external"	Use |vim-external|
+	"systemopen"	Use https://deno.land/x/systemopen@v0.2.0
+	"uiopen"	Use |vim.ui.open()| (Neovim only)
 
 ==============================================================================
-ACTIONS						*ddu-kind-url-actions*
+ACTIONS                                                 *ddu-kind-url-actions*
 
-						*ddu-kind-url-action-browse*
+                                                  *ddu-kind-url-action-browse*
 browse
 	Browse the URLs using external browser.
-	|ddu-kind-url-param-externalOpener| is used for a way to open external
-	browser.
+	|ddu-kind-url-param-externalOpener| is used to detect the method to
+	open external browser.
 
-						*ddu-kind-url-action-open*
+                                                    *ddu-kind-url-action-open*
 open
 	Open the URLs as vim buffer.
-	This will be useful when you use plugins that can treat the URLs as vim
-	buffer, like |netrw| and |vim-protocol|.
+	This will be useful when you use plugins that can treat the URLs as
+	vim buffer, like |netrw| or |vim-protocol|.
 
 	params~
 	command		|String| (default: "|:edit|")
 		The vim ex command which open buffer.
-		You can omit the head colon of command.
 
-						*ddu-kind-url-action-yank*
+                                                    *ddu-kind-url-action-yank*
 yank
 	Yank the URLs.
-	If you select multiple items, All of URLs are yanked as joined with
-	newline.
+	If you select multiple items, URLs are yanked as joined with newline.
 	This action doesn't quit the ddu ui.
 
 	params~
@@ -93,7 +92,7 @@ yank
 		Please see also |setreg()|.
 
 ==============================================================================
-ABOUT						*ddu-kind-url-about*
+ABOUT                                                     *ddu-kind-url-about*
 
 |ddu-kind-url| is developed by Hibiki(4513ECHO) and licensed under the MIT
 License. Visit the project page for the latest version:

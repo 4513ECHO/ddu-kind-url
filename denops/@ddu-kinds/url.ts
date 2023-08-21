@@ -2,24 +2,25 @@ import * as fn from "https://deno.land/x/denops_std@v5.0.1/function/mod.ts";
 import type {
   Actions,
   Item,
-} from "https://deno.land/x/ddu_vim@v3.4.3/types.ts";
+} from "https://deno.land/x/ddu_vim@v3.5.1/types.ts";
 import {
   ActionFlags,
   BaseKind,
-} from "https://deno.land/x/ddu_vim@v3.4.3/types.ts";
-import { TextLineStream } from "https://deno.land/std@0.194.0/streams/text_line_stream.ts";
+} from "https://deno.land/x/ddu_vim@v3.5.1/types.ts";
+import { TextLineStream } from "https://deno.land/std@0.198.0/streams/text_line_stream.ts";
+import { systemopen } from "https://deno.land/x/systemopen@v0.2.0/mod.ts";
 
 export type ActionData = {
   url?: string;
 };
 export type Params = {
-  externalOpener: "openbrowser" | "external";
+  externalOpener: "openbrowser" | "external" | "systemopen" | "uiopen";
 };
-interface FetchParams {
+export type FetchParams = {
   showHeader?: boolean;
   body?: string;
   method?: string;
-}
+};
 
 function getUrl(item: Item): string {
   return (item?.action as ActionData | undefined)?.url ?? item.word;
@@ -37,6 +38,16 @@ export class Kind extends BaseKind<Params> {
         case "external":
           for (const item of args.items) {
             await args.denops.call("external#browser", getUrl(item));
+          }
+          break;
+        case "systemopen":
+          for (const item of args.items) {
+            await systemopen(getUrl(item));
+          }
+          break;
+        case "uiopen":
+          for (const item of args.items) {
+            await args.denops.call("luaeval", "vim.ui.open(_A)", getUrl(item));
           }
           break;
         default:
@@ -109,7 +120,7 @@ export class Kind extends BaseKind<Params> {
 
   override params(): Params {
     return {
-      externalOpener: "openbrowser",
+      externalOpener: "systemopen",
     };
   }
 }
