@@ -69,6 +69,22 @@ browse
 	|ddu-kind-url-param-externalOpener| is used to detect the method to
 	open external browser.
 
+                                                   *ddu-kind-url-action-fetch*
+fetch
+	Request to the URLs and show the result in scratch buffer.
+
+	params~
+	body		|String| (default: `null`)
+		Optional body of request.
+	headers		|Dictionary| of |String| (default: `{}`)
+		Headers of request.
+	method		|String| (default: "GET")
+		HTTP method of request.
+	showHeader	|Boolean| (default: |v:true|)
+		if it is |v:true| draw headers of response.
+	showStatus	|Boolean| (default: |v:true|)
+		if it is |v:true| draw status of response.
+
                                                     *ddu-kind-url-action-open*
 open
 	Open the URLs as vim buffer.
@@ -86,7 +102,7 @@ yank
 	This action doesn't quit the ddu ui.
 
 	params~
-	register	|String| (default: `undefined`)
+	register	|String| (default: |v:register|)
 		The |registers| which URLs will be yanked to.
 		If you omit it, URLs will be yanked to |v:register|.
 		Please see also |setreg()|.

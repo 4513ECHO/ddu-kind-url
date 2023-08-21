@@ -7,6 +7,7 @@ import {
   ActionFlags,
   BaseKind,
 } from "https://deno.land/x/ddu_vim@v3.5.1/types.ts";
+import { deepMerge } from "https://deno.land/std@0.199.0/collections/deep_merge.ts";
 import { TextLineStream } from "https://deno.land/std@0.198.0/streams/text_line_stream.ts";
 import { systemopen } from "https://deno.land/x/systemopen@v0.2.0/mod.ts";
 
@@ -17,13 +18,22 @@ export type Params = {
   externalOpener: "openbrowser" | "external" | "systemopen" | "uiopen";
 };
 export type FetchParams = {
-  showHeader?: boolean;
-  body?: string;
-  method?: string;
+  body: string | null;
+  headers: Record<string, string>;
+  method: string;
+  showHeader: boolean;
+  showStatus: boolean;
 };
 
 function getUrl(item: Item): string {
   return (item?.action as ActionData | undefined)?.url ?? item.word;
+}
+
+function capitalize(str: string): string {
+  return str.replace(
+    /\w+/g,
+    (match) => match[0].toUpperCase() + match.slice(1).toLowerCase(),
+  );
 }
 
 export class Kind extends BaseKind<Params> {
@@ -73,45 +83,55 @@ export class Kind extends BaseKind<Params> {
 
     async yank(args) {
       const { register } = args.actionParams as { register?: string };
-      const content = args.items.map(getUrl).join("\n");
       await fn.setreg(
         args.denops,
         register ?? await args.denops.eval("v:register"),
-        content,
+        args.items.map(getUrl),
       );
       return ActionFlags.Persist;
     },
 
-    async fetchUnstable(args) {
-      const params = args.actionParams as FetchParams;
+    async fetch(args) {
+      const params = deepMerge<FetchParams>(
+        args.actionParams as Partial<FetchParams>,
+        {
+          body: null,
+          headers: {},
+          method: "GET",
+          showHeader: true,
+          showStatus: true,
+        },
+      );
       for (const item of args.items) {
         const response = await fetch(getUrl(item), {
           body: params.body,
-          method: params.method ?? "GET",
+          headers: params.headers,
+          method: params.method,
         });
+        const content: string[] = [];
 
-        const header: string[] = [];
-        if (params.showHeader) {
-          header.push(`HTTP/1.1 ${response.status} ${response.statusText}`);
-          for await (const [key, value] of response.headers.entries()) {
-            header.push(`${key}: ${value}`);
-          }
-          header.push("");
+        if (params.showStatus) {
+          content.push(`${response.status} ${response.statusText}`);
+          content.push("");
         }
-
-        const body: string[] = [];
-        const bodyRaw = response.body;
-        if (bodyRaw !== null) {
-          const stream = bodyRaw
+        if (params.showHeader) {
+          for await (const [key, value] of response.headers.entries()) {
+            content.push(`${capitalize(key)}: ${value}`);
+          }
+          content.push("");
+        }
+        if (response.body) {
+          const stream = response.body
             .pipeThrough(new TextDecoderStream())
             .pipeThrough(new TextLineStream());
           for await (const line of stream) {
-            body.push(line);
+            content.push(line);
           }
         }
 
-        const content = header.concat(body);
-        await args.denops.cmd("new +setlocal\\ buftype=nofile");
+        await args.denops.cmd(
+          "new +setlocal\\ buftype=nofile ddu-kind-url-fetch",
+        );
         await args.denops.call("setline", 1, content);
       }
       return ActionFlags.None;
