@@ -1,14 +1,14 @@
-import * as fn from "https://deno.land/x/denops_std@v5.0.1/function/mod.ts";
+import * as fn from "https://deno.land/x/denops_std@v5.2.0/function/mod.ts";
 import type {
   Actions,
   Item,
-} from "https://deno.land/x/ddu_vim@v3.6.0/types.ts";
+} from "https://deno.land/x/ddu_vim@v3.9.0/types.ts";
 import {
   ActionFlags,
   BaseKind,
-} from "https://deno.land/x/ddu_vim@v3.6.0/types.ts";
-import { deepMerge } from "https://deno.land/std@0.201.0/collections/deep_merge.ts";
-import { TextLineStream } from "https://deno.land/std@0.201.0/streams/text_line_stream.ts";
+} from "https://deno.land/x/ddu_vim@v3.9.0/types.ts";
+import { deepMerge } from "https://deno.land/std@0.210.0/collections/deep_merge.ts";
+import { TextLineStream } from "https://deno.land/std@0.210.0/streams/text_line_stream.ts";
 import { systemopen } from "https://deno.land/x/systemopen@v0.2.0/mod.ts";
 
 export type ActionData = {
