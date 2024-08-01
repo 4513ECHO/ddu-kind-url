@@ -57,7 +57,7 @@ externalOpener	|String| (default: "systemopen")
 	value		description~
 	"openbrowser"	Use |openbrowser|
 	"external"	Use |vim-external|
-	"systemopen"	Use https://deno.land/x/systemopen@v0.2.0
+	"systemopen"	Use https://jsr.io/@lambdalisue/systemopen
 	"uiopen"	Use |vim.ui.open()| (Neovim only)
 
 ==============================================================================

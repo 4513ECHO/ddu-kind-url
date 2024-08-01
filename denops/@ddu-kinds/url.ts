@@ -1,15 +1,13 @@
-import * as fn from "https://deno.land/x/denops_std@v6.0.1/function/mod.ts";
-import type {
-  Actions,
-  Item,
-} from "https://deno.land/x/ddu_vim@v3.10.2/types.ts";
+import * as fn from "jsr:@denops/std@^7.0.1/function";
 import {
   ActionFlags,
-  BaseKind,
-} from "https://deno.land/x/ddu_vim@v3.10.2/types.ts";
-import { deepMerge } from "https://deno.land/std@0.214.0/collections/deep_merge.ts";
-import { TextLineStream } from "https://deno.land/std@0.214.0/streams/text_line_stream.ts";
-import { systemopen } from "https://deno.land/x/systemopen@v0.2.0/mod.ts";
+  type Actions,
+  type Item,
+} from "jsr:@shougo/ddu-vim@^5.0.0/types";
+import { BaseKind } from "jsr:@shougo/ddu-vim@^5.0.0/kind";
+import { deepMerge } from "jsr:@std/collections@^1.0.5/deep-merge";
+import { TextLineStream } from "jsr:@std/streams@^1.0.0/text-line-stream";
+import { systemopen } from "jsr:@lambdalisue/systemopen@^1.0.0";
 
 export type ActionData = {
   url?: string;
@@ -32,11 +30,11 @@ function getUrl(item: Item): string {
 function capitalize(str: string): string {
   return str.replace(
     /\w+/g,
-    (match) => match[0].toUpperCase() + match.slice(1).toLowerCase(),
+    (match) => match[0]?.toUpperCase() + match.slice(1).toLowerCase(),
   );
 }
 
-export const UrlActions = {
+export const UrlActions: Actions<Params> = {
   async browse(args) {
     switch (args.kindParams.externalOpener) {
       case "openbrowser":
@@ -110,8 +108,7 @@ export const UrlActions = {
       const content: string[] = [];
 
       if (params.showStatus) {
-        content.push(`${response.status} ${response.statusText}`);
-        content.push("");
+        content.push(`${response.status} ${response.statusText}`, "");
       }
       if (params.showHeader) {
         for await (const [key, value] of response.headers.entries()) {
@@ -123,9 +120,7 @@ export const UrlActions = {
         const stream = response.body
           .pipeThrough(new TextDecoderStream())
           .pipeThrough(new TextLineStream());
-        for await (const line of stream) {
-          content.push(line);
-        }
+        content.push(...await Array.fromAsync(stream));
       }
 
       await args.denops.cmd(
@@ -135,7 +130,7 @@ export const UrlActions = {
     }
     return ActionFlags.None;
   },
-} as const satisfies Actions<Params>;
+};
 
 export class Kind extends BaseKind<Params> {
   override actions: Actions<Params> = UrlActions;

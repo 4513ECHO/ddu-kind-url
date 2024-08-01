@@ -1,0 +1,28 @@
+{
+  "name": "@4513echo/ddu-kind-url",
+  "version": "0.0.0",
+  "exports": "./denops/@ddu-kinds/url.ts",
+  "publish": {
+    "include": [
+      "**/*.ts"
+    ]
+  },
+  "compilerOptions": {
+    "noUncheckedIndexedAccess": true,
+    "useUnknownInCatchVariables": true
+  },
+  "lint": {
+    "rules": {
+      "include": [
+        "eqeqeq"
+      ],
+      "tags": [
+        "recommended"
+      ]
+    }
+  },
+  "lock": false,
+  "tasks": {
+    "check": "deno fmt --check && deno lint && deno check **/*.ts **/*.tsx"
+  }
+}
