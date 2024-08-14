@@ -17,12 +17,13 @@
         "eqeqeq"
       ],
       "tags": [
+        "jsr",
         "recommended"
       ]
     }
   },
   "lock": false,
   "tasks": {
-    "check": "deno fmt --check && deno lint && deno check **/*.ts **/*.tsx"
+    "check": "deno fmt --check && deno lint && deno check **/*.ts"
   }
 }

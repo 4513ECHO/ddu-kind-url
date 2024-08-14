@@ -1,27 +1,87 @@
-import * as fn from "jsr:@denops/std@^7.0.1/function";
+/**
+ * URL kind for ddu.vim.
+ * Please read {@link https://github.com/4513ECHO/ddu-kind-url/blob/main/doc/ddu-kind-url.txt help} for details.
+ *
+ * @example
+ * ```vim
+ * " Set kind default action.
+ * call ddu#custom#patch_global('kindOptions', {
+ *     \ 'url': {
+ *     \   'defaultAction': 'browse',
+ *     \ },
+ *     \ })
+ * ```
+ * @module
+ */
+
+import * as fn from "jsr:@denops/std@^7.0.3/function";
 import {
+  type ActionCallback,
   ActionFlags,
   type Actions,
   type Item,
 } from "jsr:@shougo/ddu-vim@^5.0.0/types";
-import { BaseKind } from "jsr:@shougo/ddu-vim@^5.0.0/kind";
+import { BaseKind, type BaseKindParams } from "jsr:@shougo/ddu-vim@^5.0.0/kind";
 import { deepMerge } from "jsr:@std/collections@^1.0.5/deep-merge";
-import { TextLineStream } from "jsr:@std/streams@^1.0.0/text-line-stream";
+import { TextLineStream } from "jsr:@std/streams@^1.0.1/text-line-stream";
 import { systemopen } from "jsr:@lambdalisue/systemopen@^1.0.0";
 
-export type ActionData = {
+/** Action data of URL kind */
+export interface ActionData {
+  /** URL of the item */
   url?: string;
-};
-export type Params = {
+}
+/** kindParams of ddu-kind-url */
+export interface Params extends BaseKindParams {
+  /**
+   * The method to use external browser in {@link UrlActions.browse}.
+   * Following values are available:
+   * |value          |description                                                                     |
+   * |:-------------:|--------------------------------------------------------------------------------|
+   * |`"openbrowser"`|Use {@link https://github.com/tyru/open-browser.vim openbrowser.vim}            |
+   * |`"external"`   |Use {@link https://github.com/itchyny/vim-external vim-external}                |
+   * |`"systemopen"` |Use {@link https://jsr.io/@lambdalisue/systemopen `jsr:@lambdalisue/systemopen`}|
+   * |`"uiopen"`     |Use `vim.ui.open()` (Neovim only)                                               |
+   */
   externalOpener: "openbrowser" | "external" | "systemopen" | "uiopen";
-};
-export type FetchParams = {
+}
+/** actionParams used in {@link UrlActions.fetch} */
+export interface FetchParams {
+  /** Optional body of request (default: `null`) */
   body: string | null;
+  /** Headers of request (default: `{}`) */
   headers: Record<string, string>;
+  /** HTTP method of request (default: `"GET"`) */
   method: string;
+  /** Whether to show response headers (default: `true`) */
   showHeader: boolean;
+  /** Whether to show response status (default: `true`) */
   showStatus: boolean;
-};
+}
+/** Implemention of actions of URL kind */
+export interface UrlActions extends Actions<Params> {
+  /**
+   * Browse the URLs using external browser.
+   * {@link Params.externalOpener} is used to detect the method to open external browser.
+   */
+  browse: ActionCallback<Params>;
+  /**
+   * Request to the URLs and show the result in scratch buffer.
+   */
+  fetch: ActionCallback<Params>;
+  /**
+   * Open the URLs as vim buffer.
+   * This will be useful when you use plugins that can treat the URLs as vim buffer,
+   * like `netrw` or {@link https://github.com/lambdalisue/vim-protocol vim-protocol}.
+   */
+  open: ActionCallback<Params>;
+  /**
+   * Yank the URLs.
+   * If you select multiple items, URLs are yanked as joined with newline.
+   * This action doesn't quit the ddu ui.
+   */
+  yank: ActionCallback<Params>;
+}
 
 function getUrl(item: Item): string {
   return (item?.action as ActionData | undefined)?.url ?? item.word;
@@ -34,7 +94,7 @@ function capitalize(str: string): string {
   );
 }
 
-export const UrlActions: Actions<Params> = {
+export const UrlActions: UrlActions = {
   async browse(args) {
     switch (args.kindParams.externalOpener) {
       case "openbrowser":
@@ -89,7 +149,7 @@ export const UrlActions: Actions<Params> = {
   },
 
   async fetch(args) {
-    const params = deepMerge<FetchParams>(
+    const params = deepMerge<Partial<FetchParams>>(
       args.actionParams as Partial<FetchParams>,
       {
         body: null,
@@ -133,7 +193,7 @@ export const UrlActions: Actions<Params> = {
 };
 
 export class Kind extends BaseKind<Params> {
-  override actions: Actions<Params> = UrlActions;
+  override actions: UrlActions = UrlActions;
 
   override params(): Params {
     return {
