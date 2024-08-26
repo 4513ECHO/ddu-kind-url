@@ -19,11 +19,12 @@ import {
   type ActionCallback,
   ActionFlags,
   type Actions,
+  type BaseParams,
   type Item,
-} from "jsr:@shougo/ddu-vim@^5.0.0/types";
-import { BaseKind, type BaseKindParams } from "jsr:@shougo/ddu-vim@^5.0.0/kind";
+} from "jsr:@shougo/ddu-vim@^6.0.0-pre1/types";
+import { BaseKind } from "jsr:@shougo/ddu-vim@^6.0.0-pre1/kind";
 import { deepMerge } from "jsr:@std/collections@^1.0.5/deep-merge";
-import { TextLineStream } from "jsr:@std/streams@^1.0.1/text-line-stream";
+import { TextLineStream } from "jsr:@std/streams@^1.0.3/text-line-stream";
 import { systemopen } from "jsr:@lambdalisue/systemopen@^1.0.0";
 
 /** Action data of URL kind */
@@ -32,7 +33,7 @@ export interface ActionData {
   url?: string;
 }
 /** kindParams of ddu-kind-url */
-export interface Params extends BaseKindParams {
+export interface Params extends BaseParams {
   /**
    * The method to use external browser in {@link UrlActions.browse}.
    * Following values are available:
