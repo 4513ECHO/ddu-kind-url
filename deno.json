@@ -24,6 +24,6 @@
   },
   "lock": false,
   "tasks": {
-    "check": "deno fmt --check && deno lint && deno check **/*.ts"
+    "check": "deno fmt --check && deno lint && deno check ."
   }
 }

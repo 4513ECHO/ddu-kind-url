@@ -14,15 +14,15 @@
  * @module
  */
 
-import * as fn from "jsr:@denops/std@^7.0.3/function";
+import * as fn from "jsr:@denops/std@^7.1.1/function";
 import {
   type ActionCallback,
   ActionFlags,
   type Actions,
   type BaseParams,
   type Item,
-} from "jsr:@shougo/ddu-vim@^6.0.0-pre1/types";
-import { BaseKind } from "jsr:@shougo/ddu-vim@^6.0.0-pre1/kind";
+} from "jsr:@shougo/ddu-vim@^6.0.0/types";
+import { BaseKind } from "jsr:@shougo/ddu-vim@^6.0.0/kind";
 import { deepMerge } from "jsr:@std/collections@^1.0.5/deep-merge";
 import { TextLineStream } from "jsr:@std/streams@^1.0.3/text-line-stream";
 import { systemopen } from "jsr:@lambdalisue/systemopen@^1.0.0";
