@@ -3,7 +3,7 @@ name: jsr
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 permissions:
   contents: read
@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0
       - uses: denoland/setup-deno@v1
         with:
-          deno-version: v1.x
+          deno-version: v2.0.0-rc.4
       - name: Publish
         run: |
-          deno run -A jsr:@david/publish-on-tag@0.1.4
+          deno run --allow-all jsr:@david/publish-on-tag@0.1.4

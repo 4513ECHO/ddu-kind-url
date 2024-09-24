@@ -8,8 +8,8 @@
     ]
   },
   "compilerOptions": {
-    "noUncheckedIndexedAccess": true,
-    "useUnknownInCatchVariables": true
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true
   },
   "lint": {
     "rules": {

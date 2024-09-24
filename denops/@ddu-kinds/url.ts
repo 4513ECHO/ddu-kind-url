@@ -150,7 +150,7 @@ export const UrlActions: UrlActions = {
   },
 
   async fetch(args) {
-    const params = deepMerge<Partial<FetchParams>>(
+    const params = deepMerge<Required<FetchParams>>(
       args.actionParams as Partial<FetchParams>,
       {
         body: null,
@@ -158,7 +158,7 @@ export const UrlActions: UrlActions = {
         method: "GET",
         showHeader: true,
         showStatus: true,
-      },
+      } satisfies FetchParams,
     );
     for (const item of args.items) {
       const response = await fetch(getUrl(item), {
